@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p th:text="${message}"></p>
+
+    <form method="post" th:action="@{/create}" th:object="${candidate}">
+        Cadidate's name: <input type="text" name="name" />
+        Cadidate's email: <input type="text" name="email" />
+        <br />
+        <button>Register Candidate</button>
+    </form>
+</body>
+</html>
