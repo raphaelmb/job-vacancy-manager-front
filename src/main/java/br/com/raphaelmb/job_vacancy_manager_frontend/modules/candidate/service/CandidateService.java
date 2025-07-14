@@ -26,6 +26,8 @@ public class CandidateService {
 
         var result = rt.postForObject("http://localhost:8080/candidate/auth", request, Token.class);
 
+        System.out.println(result);
+
         return result;
     }
 }
