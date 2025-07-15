@@ -1,9 +1,12 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.controller;
 
+import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ApplyJobService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.CandidateService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.FindJobService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ProfileCandidateService;
 import jakarta.servlet.http.HttpSession;
+
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,6 +36,9 @@ public class CandidateController {
 
     @Autowired
     private FindJobService findJobService;
+
+    @Autowired
+    private ApplyJobService applyJobService;
 
     @GetMapping("/login")
     public String login() {
@@ -86,6 +93,13 @@ public class CandidateController {
         }
 
         return "candidate/jobs";
+    }
+
+    @PostMapping("/jobs/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public String applyJob(@RequestParam("jobId") UUID jobId) {
+        this.applyJobService.execute(getToken(), jobId);
+        return "redirect:/candidate/jobs";
     }
 
     private String getToken() {
