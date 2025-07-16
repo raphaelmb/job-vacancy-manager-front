@@ -1,9 +1,12 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.controller;
 
+import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.dto.CreateCandidateDTO;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ApplyJobService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.CandidateService;
+import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.CreateCandidateService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.FindJobService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ProfileCandidateService;
+import br.com.raphaelmb.job_vacancy_manager_frontend.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.UUID;
@@ -40,9 +43,29 @@ public class CandidateController {
     @Autowired
     private ApplyJobService applyJobService;
 
+    @Autowired
+    private CreateCandidateService createCandidateService;
+
     @GetMapping("/login")
     public String login() {
         return "candidate/login";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("candidate", new CreateCandidateDTO());
+        return "candidate/create";
+    }
+
+    @PostMapping("/create")
+    public String save(CreateCandidateDTO candidate, Model model) {
+        try {
+            this.createCandidateService.execute(candidate);
+        } catch (HttpClientErrorException e) {
+            model.addAttribute("error_message", FormatErrorMessage.formatErrorMessage(e.getResponseBodyAsString()));
+        }
+        model.addAttribute("candidate", candidate);
+        return "candidate/create";
     }
 
     @PostMapping("/signIn")
