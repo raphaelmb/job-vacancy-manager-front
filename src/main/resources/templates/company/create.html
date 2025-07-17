@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+    <body class="bg-sky-950 h-screen items-center flex justify-center">
+        <form id="submitForm" action="" class="flex gap-24" th:action="@{/company/create}" method="post" th:object="${company}">
+            <div class="space-y-8 bg-zinc-900 rounded-md p-10">
+                <p class="text-white">Company, create your account for free!</p>
+                <div class="flex flex-row gap-10">
+                    <input
+                            th:field="*{username}"
+                            type="text"
+                            name="username"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="username" />
+                    <input
+                            th:field="*{name}"
+                            type="text"
+                            name="name"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="name" />
+                </div>
+                <div class="flex flex-row gap-10">
+                    <input
+                            th:field="*{website}"
+                            type="text"
+                            website="website"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="website" />
+                    <input
+                            th:field="*{email}"
+                            type="email"
+                            name="email"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="email" />
+                </div>
+                <div class="flex flex-row gap-10">
+                    <input
+                            th:field="*{password}"
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="password" />
+                    <input
+                            type="password"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-600 focus:ring-2"
+                            placeholder="confirm password" />
+                </div>
+                <textarea
+                    th:field="*{description}"
+                    type="text"
+                    name="description"
+                    class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-3 focus:outline-none focus:ring-green-700 focus:ring-2"
+                    placeholder="description"></textarea>
+
+                <p class="text-red-400 hidden" id="passwordError">Passwords do not match</p>
+                <p class="text-red-400" th:if="${error_message}" th:text="${error_message}"></p>
+
+                <button class="bg-green-900 w-full p-4 rounded text-white hover:bg-green-700">Create account</button>
+                <p class="mt-4 text-white">
+                    Already registered? <a href="/company/login" class="text-center text-green-700 underline underline-offset-2 hover:text-green-600">Login</a>
+                </p>
+            </div>
+            <div class="text-white max-w-80 text-6xl flex items-center">Job Vacancy Manager</div>
+        </form>
+    </body>
+    <script>
+        document.getElementById("submitForm").addEventListener("submit", event => {
+            const password = document.getElementById("password").value
+            const confirmPassword = document.getElementById("confirmPassword").value
+
+            if (password !== confirmPassword) {
+                event.preventDefault()
+                document.getElementById("passwordError").classList.remove("hidden")
+            }
+        })
+    </script>
+</html>

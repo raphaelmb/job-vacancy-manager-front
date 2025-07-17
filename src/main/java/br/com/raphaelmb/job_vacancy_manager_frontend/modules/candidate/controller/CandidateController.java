@@ -1,11 +1,7 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.controller;
 
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.dto.CreateCandidateDTO;
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ApplyJobService;
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.CandidateService;
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.CreateCandidateService;
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.FindJobService;
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.ProfileCandidateService;
+import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service.*;
 import br.com.raphaelmb.job_vacancy_manager_frontend.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
 

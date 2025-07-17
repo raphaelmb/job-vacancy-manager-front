@@ -19,8 +19,7 @@ public class ApplyJobService {
 
         HttpEntity<UUID> request = new HttpEntity<>(jobId, headers);
 
-        var result = rt.postForObject("http://localhost:8080/candidate/job/apply", request, String.class);
+        return rt.postForObject("http://localhost:8080/candidate/job/apply", request, String.class);
 
-        return result;
     }
 }
