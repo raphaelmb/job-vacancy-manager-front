@@ -1,6 +1,5 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service;
 
-import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.dto.CreateCandidateDTO;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.dto.CreateCompanyDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
