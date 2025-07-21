@@ -3,6 +3,7 @@ package br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,9 @@ import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.dto.JobDT
 
 @Service
 public class FindJobService {
+    @Value("${host.api.job.vacancy}")
+    private String hostApi;
+
     public List<JobDTO> execute(String token, String filter) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -25,8 +29,9 @@ public class FindJobService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8080/candidate/job")
-                                        .queryParam("filter", filter);
+        String url = hostApi.concat("/candidate/job");
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url).queryParam("filter", filter);
         
         ParameterizedTypeReference<List<JobDTO>> responseType = new ParameterizedTypeReference<List<JobDTO>>() {};
 

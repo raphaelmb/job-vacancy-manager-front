@@ -1,6 +1,8 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service;
 
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.dto.CreateCompanyDTO;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -9,6 +11,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CreateCompanyService {
+    @Value("${host.api.job.vacancy}")
+    private String hostApi;
+
     public String execute(CreateCompanyDTO createCompanyDTO) {
         RestTemplate rt = new RestTemplate();
 
@@ -17,6 +22,8 @@ public class CreateCompanyService {
 
         HttpEntity<CreateCompanyDTO> request = new HttpEntity<>(createCompanyDTO, headers);
 
-        return rt.postForObject("http://localhost:8080/company/", request, String.class);
+        String url = hostApi.concat("/company/");
+
+        return rt.postForObject(url, request, String.class);
     }
 }

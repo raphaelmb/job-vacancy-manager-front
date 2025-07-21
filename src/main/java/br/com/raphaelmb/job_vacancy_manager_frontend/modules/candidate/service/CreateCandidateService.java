@@ -1,5 +1,6 @@
 package br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,6 +11,9 @@ import br.com.raphaelmb.job_vacancy_manager_frontend.modules.candidate.dto.Creat
 
 @Service
 public class CreateCandidateService {
+    @Value("${host.api.job.vacancy}")
+    private String hostApi;
+
     public void execute(CreateCandidateDTO createCandidateDTO) {
         RestTemplate rt = new RestTemplate();
 
@@ -18,7 +22,9 @@ public class CreateCandidateService {
 
         HttpEntity<CreateCandidateDTO> request = new HttpEntity<>(createCandidateDTO, headers);
 
-        var result = rt.postForObject("http://localhost:8080/candidate/", request, String.class);
+        String url = hostApi.concat("/candidate/");
+
+        var result = rt.postForObject(url, request, String.class);
 
         System.out.println(result);
     }

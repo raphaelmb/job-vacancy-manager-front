@@ -4,6 +4,7 @@ import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.dto.CreateC
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.dto.CreateJobDTO;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service.CreateCompanyService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service.CreateJobService;
+import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service.ListAllJobsCompanyService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.modules.company.service.LoginCompanyService;
 import br.com.raphaelmb.job_vacancy_manager_frontend.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,9 @@ public class CompanyController {
 
     @Autowired
     private CreateJobService createJobService;
+
+    @Autowired
+    private ListAllJobsCompanyService listAllJobsCompanyService;
 
     @GetMapping("/create")
     public String create(Model model) {
@@ -92,7 +96,25 @@ public class CompanyController {
     @PreAuthorize("hasRole('COMPANY')")
     public String createJob(CreateJobDTO createJobDTO) {
         this.createJobService.execute(createJobDTO, getToken());
-        return "redirect:/company/jobs";
+        return "redirect:/company/jobs/list";
+    }
+
+    @GetMapping("/jobs/list")
+    @PreAuthorize("hasRole('COMPANY')")
+    public String list(Model model) {
+        var result = this.listAllJobsCompanyService.execute(getToken());
+        model.addAttribute("jobs", result);
+        return "company/list";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        session.setAttribute("token", null);
+
+        return "redirect:/company/login";
     }
 
     private String getToken() {
