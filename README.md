@@ -34,7 +34,7 @@ Job Vacancy Manager Frontend is a web application built with Spring Boot and Thy
 
 ## Configuration
 - The application runs on port `8082` by default.
-- It communicates with a backend API (default: `http://localhost:8080`) for job and user management.
+- It communicates with a backend API (default: `http://localhost:8080`) for job and user management. (see this [repo](https://github.com/raphaelmb/job-vacancy-manager))
 
 ## Getting Started
 1. Clone the repository
